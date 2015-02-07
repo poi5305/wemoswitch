@@ -1,0 +1,32 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>熱水器開關</title>
+		<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+	</head>
+	<body>
+		<div>
+			熱水器狀態：
+			<span id="heat_type"></span>
+		</div>
+		<div>
+			倒數計時器：
+			<span id="timer"></span>
+		</div>
+		<div>
+			<select id="close_time">
+				<option value="10">10秒鐘</option>
+				<option value="60">1分鐘</option>
+				<option value="600">10分鐘</option>
+				<option value="900">15分鐘</option>
+				<option value="1200">20分鐘</option>
+				<option value="1800">30分鐘</option>
+				<option value="2400">40分鐘</option>
+			</select>
+			分鐘後關閉
+			<br />
+			<input type="button" value="啟動" />
+		</div>
+		
+	</body>
+</html>
