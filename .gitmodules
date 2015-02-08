@@ -1,0 +1,3 @@
+[submodule "WeMo-PHP-Toolkit"]
+	path = WeMo-PHP-Toolkit
+	url = https://github.com/elmaano/WeMo-PHP-Toolkit.git
