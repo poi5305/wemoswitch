@@ -2,30 +2,83 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>熱水器開關</title>
+		<style>
+			*
+			{
+				font-size: 72px;
+			}
+			div
+			{
+				padding: 50px;
+			}
+		</style>
 		<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+		<script>
+			$(function(){
+				get_state();
+				$("#stop").bind("click", function(){
+					$.get("wemoswitch_controler.php?cmd=stop", function(){get_state();});
+				});
+				$("#delay_stop").bind("click", function(){
+					var time = $("#stop_time").val();
+					$.get("wemoswitch_controler.php?cmd=delay_stop&time="+time, function(){get_state();});
+				});
+				setInterval(get_state, 5000);
+			});
+			function get_state()
+			{
+				$("#heat_type").html("更新中");
+				$("#timer").html("更新中");
+				$.get("wemoswitch_controler.php?cmd=state", function(d){
+					var obj = JSON.parse(d);
+					var heat_state = "未知";
+					var timer = "無計時";
+					if(obj.state == 0)
+					{
+						heat_state = "關閉";
+					}
+					else
+					{
+						heat_state = "啟動中";
+					}
+						
+					if(obj.remain_time != 0)
+					{
+						timer = "剩餘: " + obj.remain_time + "秒";
+					}
+						
+					$("#heat_type").html(heat_state);
+					$("#timer").html(timer);
+				});
+			}
+		</script>
 	</head>
 	<body>
 		<div>
 			熱水器狀態：
-			<span id="heat_type"></span>
+			<span id="heat_type">未知</span>
 		</div>
 		<div>
 			倒數計時器：
-			<span id="timer"></span>
+			<span id="timer">無計時</span>
 		</div>
 		<div>
-			<select id="close_time">
+			<select id="stop_time">
+				<option value="900">15分鐘</option>
 				<option value="10">10秒鐘</option>
 				<option value="60">1分鐘</option>
 				<option value="600">10分鐘</option>
-				<option value="900">15分鐘</option>
 				<option value="1200">20分鐘</option>
 				<option value="1800">30分鐘</option>
 				<option value="2400">40分鐘</option>
 			</select>
 			分鐘後關閉
-			}<br />
-			<input type="button" value="啟動" />
+			<br />
+			<br />
+			<input type="button" id="delay_stop" value="啟動" />
+			<br />
+			<br />
+			<input type="button" id="stop" value="關閉" />
 		</div>
 		
 	</body>
