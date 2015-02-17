@@ -26,6 +26,8 @@ switch($cmd)
 		break;
 	case "stop":
 		$switch->stop();
+		$pid = trim( shell_exec("ps -eO etimes| grep 'delay_stop_impl' |head -n1 | awk '{print $1}'") );
+                shell_exec("kill $pid >/dev/null 2>/dev/null");
 		break;
 	case "state":
 		$total_time = 0;
